@@ -1,9 +1,18 @@
-import React from 'react'
+import { Box, CircularProgress } from "@mui/material";
+import  { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const PokemonDetailsPage = () => {
-  return (
-    <div>PokemonDetailsPage!</div>
-  )
-}
+  const { slug } = useParams();
+  useEffect(() => {
+    console.log(slug);
+  }, [slug]);
 
-export default PokemonDetailsPage
+  return (
+    <Box>
+      <CircularProgress size="lg" />!
+    </Box>
+  );
+};
+
+export default PokemonDetailsPage;

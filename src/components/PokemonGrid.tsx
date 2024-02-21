@@ -1,65 +1,25 @@
-import { useEffect, useState } from "react";
-import apiClient from "../services/api-client";
+
 import { Alert, Grid, Typography, Skeleton } from "@mui/material";
 import PokemonCard from "./PokemonCard";
-import useStyles from "../styles";
 import Footer from "./Footer";
+import useFetchPokemons from "../hooks/useFetchPokemons";
 
-export interface Pokemon {
-  name: string;
-  url: string;
-}
 
-interface FetchPokemonsResponse {
-  count: number;
-  results: Pokemon[];
-}
 interface Props {
   searchText: string;
 }
 
 const PokemonGrid = ({ searchText }: Props) => {
-  const classes = useStyles().classes;
+  const {
+    currentPage,
+    error,
+    loading,
+    noResults,
+    pokemonsList,
+    setCurrentPage,
+    totalPages,
+  } = useFetchPokemons(searchText , 6);
 
-  const [pokemonsList, setPokemonsList] = useState<Pokemon[]>([]);
-  const [noResults, setNoResults] = useState(false);
-  const [error, setError] = useState("");
-
-  const [loading, setLoading] = useState(false);
-  const [totalPages, setTotalPages] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
-  useEffect(() => {
-    const fetchPokemons = async () => {
-      try {
-        setLoading(true);
-        const response = await apiClient.get<FetchPokemonsResponse>(
-          `/pokemon?limit=${itemsPerPage}&offset=${
-            (currentPage - 1) * itemsPerPage
-          }`
-        );
-        const totalPokemonsCount = response.data.count;
-        const filteredPokemons = response.data.results.filter((poke) =>
-          poke.name.toLowerCase().includes(searchText.toLowerCase())
-        );
-        if (filteredPokemons.length === 0) {
-          setNoResults(true);
-          setTotalPages(1);
-          setLoading(false);
-        } else {
-          const totalPagesCount = Math.ceil(totalPokemonsCount / itemsPerPage);
-          setTotalPages(totalPagesCount);
-          setPokemonsList(filteredPokemons);
-          setNoResults(false);
-          setLoading(false);
-        }
-      } catch (err: any) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-    fetchPokemons();
-  }, [searchText, currentPage]);
   return (
     <>
       {error && (

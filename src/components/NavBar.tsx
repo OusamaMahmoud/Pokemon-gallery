@@ -14,11 +14,14 @@ import { useRef, useState } from "react";
 import { useSearchText } from "../contexts/SearchTextContext";
 
 const NavBar = () => {
-  const {setSearchText} = useSearchText();
+  
   const classes = useStyles().classes;
   const [error, setError] = useState("");
 
+  const {setSearchText} = useSearchText();
+
   const ref = useRef<HTMLInputElement>(null);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const searchText = ref.current?.value.trim();
@@ -33,6 +36,7 @@ const NavBar = () => {
     setSearchText(searchText);
     setError("");
   };
+
   return (
     <AppBar position="relative" className={classes.navBar}>
       <Toolbar>

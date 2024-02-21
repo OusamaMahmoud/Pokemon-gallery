@@ -10,6 +10,7 @@ interface Props {
 
 const Footer = ({ currentPage, totalPages, onPrevious, onNext }: Props) => {
   const classes = useStyles().classes;
+  
   const handlePreviousButton = () => {
     if (currentPage > 1) {
       onPrevious(currentPage - 1);
