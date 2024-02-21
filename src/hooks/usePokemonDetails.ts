@@ -1,15 +1,30 @@
 import { useState, useEffect } from "react";
 import apiClient from "../services/api-client";
-import { Pokemon } from "./useFetchPokemons";
-interface PokemonDetails {
+
+export interface Stat {
+  base_stat: number;
+  stat: { name: string };
+}
+
+interface Move {
+  move: { name: string };
+}
+interface Ability {
+  ability: { name: string };
+}
+
+export interface PokemonDetails {
   types: PokemonType[];
   sprites: { front_default: string };
+  stats: Stat[];
+  moves: Move[];
+  abilities: Ability[];
 }
 interface PokemonType {
   slot: number;
   type: { name: string };
 }
-const usePokemonDetails = (pokemon: Pokemon) => {
+const usePokemonDetails = (pokemonName: string) => {
   const [loading, setLoading] = useState(false);
   const [pokemonError, setPokemonError] = useState("");
 
@@ -19,7 +34,7 @@ const usePokemonDetails = (pokemon: Pokemon) => {
   useEffect(() => {
     setLoading(true);
     apiClient
-      .get(`/pokemon/${pokemon.name}`)
+      .get(`/pokemon/${pokemonName}`)
       .then((res) => {
         setPokemonDetails(res.data);
         setLoading(false);

@@ -20,9 +20,9 @@ interface Props {
 const PokemonCard = ({ pokemon }: Props) => {
   const classes = useStyles().classes;
 
-  const { pokemonDetails, pokemonError } = usePokemonDetails(pokemon);
+  const { pokemonDetails, pokemonError } = usePokemonDetails(pokemon.name);
 
-  const { pokemonSpecies, loading, speciesError } = usePokemonSpecies(pokemon);
+  const { pokemonSpecies, loading, speciesError } = usePokemonSpecies(pokemon.name);
 
   return (
     <>

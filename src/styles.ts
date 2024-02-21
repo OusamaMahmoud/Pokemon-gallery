@@ -20,16 +20,16 @@ const useStyles = makeStyles()((theme) => {
     },
     cardMedia: {
       paddingTop: "56.25%", // 16:9 aspect ratio
-      backgroundColor:"#efe9e9",
-      height:"270px",
+      backgroundColor: "#efe9e9",
+      height: "270px",
     },
     cardContent: {
       flexGrow: 1,
     },
-   paginationBNutton:{
-    backgroundColor:"#d6393a",
-    minWidth: "120px"
-   },
+    paginationBNutton: {
+      backgroundColor: "#d6393a",
+      minWidth: "120px",
+    },
     pokeType: {
       padding: "10px",
       borderRadius: "20px",
@@ -38,6 +38,29 @@ const useStyles = makeStyles()((theme) => {
       minWidth: "60px",
       textAlign: "center",
       textTransform: "capitalize",
+    },
+    detailsPageButton: {
+      color: "GrayText",
+      padding: "10",
+      borderRadius: "0px",
+      marginRight: "20px",
+    },
+    scrollableContainer: {
+      maxHeight: "400px",
+      overflowY: "auto",
+      "&::-webkit-scrollbar": {
+        width: "12px",
+      },
+      "&::-webkit-scrollbar-track": {
+        background: "#f1f1f1",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        background: "#888",
+        borderRadius: "6px",
+      },
+      "&::-webkit-scrollbar-thumb:hover": {
+        background: "#555",
+      },
     },
   };
 });

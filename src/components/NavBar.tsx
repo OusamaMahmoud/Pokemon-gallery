@@ -12,13 +12,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import useStyles from "../styles";
 import { useRef, useState } from "react";
 import { useSearchText } from "../contexts/SearchTextContext";
-
+import pokeAPILogo from "../assets/pokeAPI_logo.png";
 const NavBar = () => {
-  
   const classes = useStyles().classes;
   const [error, setError] = useState("");
 
-  const {setSearchText} = useSearchText();
+  const { setSearchText } = useSearchText();
 
   const ref = useRef<HTMLInputElement>(null);
 
@@ -42,7 +41,7 @@ const NavBar = () => {
       <Toolbar>
         <Grid container justifyContent={"space-between"} alignItems={"center"}>
           <Grid item className={classes.flex}>
-            <img src="src/assets/pokeAPI_logo.png" width={100} />
+            <img src={pokeAPILogo} width={100} />
             <Typography variant="h5" style={{ color: "white" }}>
               Pokemon Gallary
             </Typography>

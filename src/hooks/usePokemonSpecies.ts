@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
-import { Pokemon } from "./useFetchPokemons";
 
 interface PokemonSpecies {
   flavor_text_entries: { flavor_text: string }[];
   color: { name: string };
 }
 
-const usePokemonSpecies = (pokemon: Pokemon) => {
+const usePokemonSpecies = (pokemonName: string) => {
   const [loading, setLoading] = useState(false);
   const [speciesError, setSpeciesError] = useState("");
   const [pokemonSpecies, setPokemonSpecies] = useState<PokemonSpecies>(
@@ -17,7 +16,7 @@ const usePokemonSpecies = (pokemon: Pokemon) => {
   useEffect(() => {
     setLoading(true);
     apiClient
-      .get(`/pokemon-species/${pokemon.name}`)
+      .get(`/pokemon-species/${pokemonName}`)
       .then((res) => {
         setPokemonSpecies(res.data);
         setLoading(false);
