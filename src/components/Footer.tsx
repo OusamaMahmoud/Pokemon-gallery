@@ -39,7 +39,9 @@ const Footer = ({ currentPage, totalPages, onPrevious, onNext }: Props) => {
               onClick={handleNextButton}
               variant="contained"
               disabled={currentPage === totalPages}
-              className={`${currentPage != totalPages && classes.paginationBNutton}`}
+              className={`${
+                currentPage != totalPages && classes.paginationBNutton
+              }`}
             >
               NEXT
             </Button>

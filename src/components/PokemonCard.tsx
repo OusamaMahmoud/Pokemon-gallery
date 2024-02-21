@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
+import { Link } from "react-router-dom";
 
 interface Props {
   pokemon: Pokemon;
@@ -61,7 +62,7 @@ const PokemonCard = ({ pokemon }: Props) => {
           gutterBottom
           style={{ fontWeight: "500", textTransform: "capitalize" }}
         >
-          {pokemon.name}
+          <Link to={`/pokemonDetailsPage/${pokemon.name}`}>{pokemon.name}</Link>
         </Typography>
         {pokemonSpecies.flavor_text_entries && (
           <Typography paragraph color={"textSecondary"}>

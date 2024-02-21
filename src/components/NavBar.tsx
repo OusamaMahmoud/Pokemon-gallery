@@ -11,13 +11,13 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import useStyles from "../styles";
 import { useRef, useState } from "react";
+import { useSearchText } from "../contexts/SearchTextContext";
 
-interface Props {
-  onSearch: (searchText: string) => void;
-}
-const NavBar = ({ onSearch }: Props) => {
-  const [error, setError] = useState("");
+const NavBar = () => {
+  const {setSearchText} = useSearchText();
   const classes = useStyles().classes;
+  const [error, setError] = useState("");
+
   const ref = useRef<HTMLInputElement>(null);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,7 +30,7 @@ const NavBar = ({ onSearch }: Props) => {
       setError("Numeric values are not allowed in the search query.");
       return;
     }
-    onSearch(searchText);
+    setSearchText(searchText);
     setError("");
   };
   return (
