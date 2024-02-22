@@ -19,12 +19,14 @@ export interface PokemonDetails {
   stats: Stat[];
   moves: Move[];
   abilities: Ability[];
+  id:number;
+  name:string;
 }
 interface PokemonType {
   slot: number;
   type: { name: string };
 }
-const usePokemonDetails = (pokemonName: string) => {
+const usePokemonDetails = (pokemonId: string) => {
   const [loading, setLoading] = useState(false);
   const [pokemonError, setPokemonError] = useState("");
 
@@ -34,7 +36,7 @@ const usePokemonDetails = (pokemonName: string) => {
   useEffect(() => {
     setLoading(true);
     apiClient
-      .get(`/pokemon/${pokemonName}`)
+      .get(`/pokemon/${pokemonId}`)
       .then((res) => {
         setPokemonDetails(res.data);
         setLoading(false);

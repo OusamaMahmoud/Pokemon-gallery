@@ -26,12 +26,12 @@ interface ComponentsMapper {
 const PokemonDetailsPage = () => {
   const navigate = useNavigate();
   const classes = useStyles().classes;
-  const { slug: pokemonName } = useParams();
+  const { pokemonId } = useParams();
   const [activeComponent, setActiveComponent] = useState("STATS");
   const [activeButton, setActiveButton] = useState("STATS");
 
   const { pokemonDetails, loading, pokemonError } = usePokemonDetails(
-    pokemonName!
+    pokemonId!
   );
 
   const components: ComponentsMapper = {
@@ -44,7 +44,7 @@ const PokemonDetailsPage = () => {
     setActiveButton(componentName);
   };
 
-  const { pokemonSpecies } = usePokemonSpecies(pokemonName!);
+  const { pokemonSpecies } = usePokemonSpecies(pokemonId!);
 
   return (
     <>
@@ -92,7 +92,7 @@ const PokemonDetailsPage = () => {
                   gutterBottom
                   style={{ textTransform: "capitalize" }}
                 >
-                  {pokemonName}
+                  {pokemonDetails.name}
                 </Typography>
                 <Container maxWidth={"sm"}>
                   {pokemonDetails.types && (

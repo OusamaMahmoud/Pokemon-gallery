@@ -28,8 +28,16 @@ const PokemonCard = ({ pokemon }: Props) => {
 
   return (
     <>
-      {pokemonError && (<Alert variant="filled" color="error">{pokemonError}</Alert>)}
-      {speciesError && (<Alert variant="filled" color="error">{speciesError}</Alert>)}
+      {pokemonError && (
+        <Alert variant="filled" color="error">
+          {pokemonError}
+        </Alert>
+      )}
+      {speciesError && (
+        <Alert variant="filled" color="error">
+          {speciesError}
+        </Alert>
+      )}
 
       <Card className={classes.card}>
         {renderPokemonMedia(pokemonDetails, loading)}
@@ -40,7 +48,7 @@ const PokemonCard = ({ pokemon }: Props) => {
             style={{ fontWeight: "500", textTransform: "capitalize" }}
           >
             <Link
-              to={`/pokemonDetailsPage/${pokemon.name}`}
+              to={`/pokemonDetailsPage/${pokemonDetails.id}`}
               style={{ textDecoration: "none", color: "black" }}
             >
               {pokemon.name}
@@ -58,7 +66,10 @@ const PokemonCard = ({ pokemon }: Props) => {
   );
 };
 
-const renderPokemonMedia = (pokemonDetails: PokemonDetails, loading: boolean) => {
+const renderPokemonMedia = (
+  pokemonDetails: PokemonDetails,
+  loading: boolean
+) => {
   const classes = useStyles().classes;
 
   if (loading) {
@@ -73,7 +84,10 @@ const renderPokemonMedia = (pokemonDetails: PokemonDetails, loading: boolean) =>
     )
   );
 };
-const renderPokemonTypes = (pokemonDetails: PokemonDetails, pokemonSpecies: any) => {
+const renderPokemonTypes = (
+  pokemonDetails: PokemonDetails,
+  pokemonSpecies: any
+) => {
   const classes = useStyles().classes;
 
   if (!pokemonDetails.types) return null;
@@ -93,7 +107,6 @@ const renderPokemonTypes = (pokemonDetails: PokemonDetails, pokemonSpecies: any)
     </CardActions>
   );
 };
-
 
 const getFormattedFlavorText = (pokemonSpecies: any) => {
   return pokemonSpecies.flavor_text_entries[3].flavor_text.replace(/\/g, "");

@@ -6,7 +6,7 @@ interface PokemonSpecies {
   color: { name: string };
 }
 
-const usePokemonSpecies = (pokemonName: string) => {
+const usePokemonSpecies = (pokemonId: string) => {
   const [loading, setLoading] = useState(false);
   const [speciesError, setSpeciesError] = useState("");
   const [pokemonSpecies, setPokemonSpecies] = useState<PokemonSpecies>(
@@ -16,7 +16,7 @@ const usePokemonSpecies = (pokemonName: string) => {
   useEffect(() => {
     setLoading(true);
     apiClient
-      .get(`/pokemon-species/${pokemonName}`)
+      .get(`/pokemon-species/${pokemonId}`)
       .then((res) => {
         setPokemonSpecies(res.data);
         setLoading(false);
