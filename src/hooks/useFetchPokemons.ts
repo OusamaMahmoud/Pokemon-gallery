@@ -36,9 +36,26 @@ const useFetchPokemons = (itemsPerPage: number) => {
             poke.name.toLowerCase().includes(searchText.toLowerCase())
           );
           if (filteredPokemons.length === 0) {
-            setNoResults(true);
-            setTotalPages(1);
-            setLoading(false);
+            const restResponse = await apiClient.get<FetchPokemonsResponse>(
+              `/pokemon?limit=500&offset=500`
+            );
+            const restFilteredPokemons = restResponse.data.results.filter(
+              (poke) =>
+                poke.name.toLowerCase().includes(searchText.toLowerCase())
+            );
+            if (restFilteredPokemons.length === 0) {
+              setNoResults(true);
+              setTotalPages(1);
+              setLoading(false);
+            } else {
+              const totalPagesCount = Math.ceil(
+                totalPokemonsCount / itemsPerPage
+              );
+              setTotalPages(totalPagesCount);
+              setPokemonsList(restFilteredPokemons);
+              setNoResults(false);
+              setLoading(false);
+            }
           } else {
             const totalPagesCount = Math.ceil(
               totalPokemonsCount / itemsPerPage
