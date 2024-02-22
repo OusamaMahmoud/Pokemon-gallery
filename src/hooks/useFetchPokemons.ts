@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
-
-
+import { useSearchText } from "../contexts/SearchTextContext";
 
 export interface Pokemon {
   name: string;
@@ -13,7 +12,7 @@ interface FetchPokemonsResponse {
   results: Pokemon[];
 }
 
-const useFetchPokemons = (searchText: string ,itemsPerPage:number) => {
+const useFetchPokemons = (itemsPerPage: number) => {
   const [pokemonsList, setPokemonsList] = useState<Pokemon[]>([]);
   const [noResults, setNoResults] = useState(false);
   const [error, setError] = useState("");
@@ -22,7 +21,8 @@ const useFetchPokemons = (searchText: string ,itemsPerPage:number) => {
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
 
-
+  const { searchText } = useSearchText();
+  
   useEffect(() => {
     const fetchPokemons = async () => {
       try {

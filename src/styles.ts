@@ -43,7 +43,7 @@ const useStyles = makeStyles()((theme) => {
       color: "GrayText",
       padding: "10",
       borderRadius: "0px",
-      marginRight: "20px",
+      marginRight: "10px",
     },
     scrollableContainer: {
       maxHeight: "250px",

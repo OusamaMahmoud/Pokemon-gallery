@@ -25,7 +25,7 @@ const PokemonMoves = ({ qualities }: Props) => {
                 item
                 style={{
                   borderRight: "2px solid red",
-                  minWidth: "120px",
+                  minWidth: "80px",
                   paddingBottom: "18px",
                   textTransform: "capitalize",
                   fontWeight: "600",

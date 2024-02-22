@@ -15,7 +15,7 @@ const PokemonStats = ({ qualities }: Props) => {
               item
               style={{
                 borderRight: "2px solid red",
-                minWidth: "300px",
+                minWidth: "230px",
                 paddingBottom: "18px",
                 textTransform: "capitalize",
                 fontWeight: "600",

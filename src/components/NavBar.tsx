@@ -40,7 +40,7 @@ const NavBar = () => {
     <AppBar position="relative" className={classes.navBar}>
       <Toolbar>
         <Grid container justifyContent={"space-between"} alignItems={"center"}>
-          <Grid item className={classes.flex}>
+          <Grid item className={classes.flex} >
             <img src={pokeAPILogo} width={100} />
             <Typography variant="h5" style={{ color: "white" }}>
               Pokemon Gallary
@@ -49,7 +49,7 @@ const NavBar = () => {
           <Grid item>
             <form onSubmit={handleSubmit}>
               <TextField
-                variant="outlined"
+                variant="filled"
                 placeholder="Search.."
                 inputRef={ref}
                 InputProps={{

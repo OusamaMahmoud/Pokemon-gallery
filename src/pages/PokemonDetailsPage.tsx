@@ -8,7 +8,7 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import usePokemonDetails from "../hooks/usePokemonDetails";
 import usePokemonSpecies from "../hooks/usePokemonSpecies";
 import useStyles from "../styles";
@@ -16,12 +16,14 @@ import PokemonAbilities from "../components/PokemonAbilities";
 import { ReactNode, useState } from "react";
 import PokemonStats from "../components/PokemonStats";
 import PokemonMoves from "../components/PokemonMoves";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 
 interface ComponentsMapper {
   [key: string]: ReactNode;
 }
 
 const PokemonDetailsPage = () => {
+  const navigate = useNavigate();
   const classes = useStyles().classes;
   const { slug } = useParams();
   const [activeComponent, setActiveComponent] = useState("STATS");
@@ -38,6 +40,7 @@ const PokemonDetailsPage = () => {
     setActiveComponent(componentName);
     setActiveButton(componentName);
   };
+
   const { pokemonSpecies } = usePokemonSpecies(slug!);
   return (
     <>
@@ -46,7 +49,13 @@ const PokemonDetailsPage = () => {
           {pokemonError}
         </Alert>
       )}
-
+      <Button
+        onClick={() => navigate(-1)}
+        variant="contained"
+        style={{ backgroundColor: "#bb3014", margin: "80px 0 0 126px" }}
+      >
+        <NavigateBeforeIcon style={{ marginRight: "3px" }} /> BACK
+      </Button>
       {loading ? (
         <Box boxShadow={4} p={2} borderRadius={2} maxWidth={1000} m="0 auto">
           <CircularProgress
@@ -62,7 +71,7 @@ const PokemonDetailsPage = () => {
           borderRadius={2}
           maxWidth={1400}
           minHeight={"700px"}
-          m="130px auto"
+          m="60px auto"
         >
           {pokemonDetails && (
             <Grid

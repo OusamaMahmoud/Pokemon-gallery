@@ -1,15 +1,16 @@
-
 import { Alert, Grid, Typography, Skeleton } from "@mui/material";
 import PokemonCard from "./PokemonCard";
 import Footer from "./Footer";
 import useFetchPokemons from "../hooks/useFetchPokemons";
+import { useEffect } from "react";
+import { useSearchText } from "../contexts/SearchTextContext";
 
 
-interface Props {
-  searchText: string;
-}
 
-const PokemonGrid = ({ searchText }: Props) => {
+const PokemonGrid = () => {
+
+  const { searchText } = useSearchText();
+
   const {
     currentPage,
     error,
@@ -18,8 +19,22 @@ const PokemonGrid = ({ searchText }: Props) => {
     pokemonsList,
     setCurrentPage,
     totalPages,
-  } = useFetchPokemons(searchText , 6);
+  } = useFetchPokemons(6);
 
+
+  useEffect(() => {
+    if (localStorage.getItem("currentPage")) {
+      const pageInStorage = localStorage.getItem("currentPage");
+      if (pageInStorage) {
+        setCurrentPage(parseInt(pageInStorage, 10));
+      }
+    }
+  }, [setCurrentPage]);
+
+  const handlePageChangeButtons = (page: number) => {
+    setCurrentPage(page);
+    localStorage.setItem("currentPage", page.toString());
+  };
   return (
     <>
       {error && (
@@ -60,8 +75,8 @@ const PokemonGrid = ({ searchText }: Props) => {
                 </Grid>
               ))}
               <Footer
-                onPrevious={(current) => setCurrentPage(current)}
-                onNext={(current) => setCurrentPage(current)}
+                onPrevious={(page) => handlePageChangeButtons(page)}
+                onNext={(page) => handlePageChangeButtons(page)}
                 currentPage={currentPage}
                 totalPages={totalPages}
               />

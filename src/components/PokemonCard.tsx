@@ -19,10 +19,11 @@ interface Props {
 
 const PokemonCard = ({ pokemon }: Props) => {
   const classes = useStyles().classes;
-
   const { pokemonDetails, pokemonError } = usePokemonDetails(pokemon.name);
 
-  const { pokemonSpecies, loading, speciesError } = usePokemonSpecies(pokemon.name);
+  const { pokemonSpecies, loading, speciesError } = usePokemonSpecies(
+    pokemon.name
+  );
 
   return (
     <>
@@ -51,7 +52,10 @@ const PokemonCard = ({ pokemon }: Props) => {
             gutterBottom
             style={{ fontWeight: "500", textTransform: "capitalize" }}
           >
-            <Link to={`/pokemonDetailsPage/${pokemon.name}`}>
+            <Link
+              to={`/pokemonDetailsPage/${pokemon.name}`}
+              style={{ textDecoration: "none", color: "black" }}
+            >
               {pokemon.name}
             </Link>
           </Typography>
