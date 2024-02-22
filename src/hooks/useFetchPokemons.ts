@@ -29,7 +29,7 @@ const useFetchPokemons = (itemsPerPage: number) => {
         if (searchText) {
           setLoading(true);
           const response = await apiClient.get<FetchPokemonsResponse>(
-            `/pokemon?limit=1302`
+            `/pokemon?limit=500`
           );
           const totalPokemonsCount = response.data.count;
           const filteredPokemons = response.data.results.filter((poke) =>
