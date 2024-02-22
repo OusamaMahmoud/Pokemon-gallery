@@ -22,30 +22,54 @@ const useFetchPokemons = (itemsPerPage: number) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const { searchText } = useSearchText();
-  
+
   useEffect(() => {
     const fetchPokemons = async () => {
       try {
-        setLoading(true);
-        const response = await apiClient.get<FetchPokemonsResponse>(
-          `/pokemon?limit=${itemsPerPage}&offset=${
-            (currentPage - 1) * itemsPerPage
-          }`
-        );
-        const totalPokemonsCount = response.data.count;
-        const filteredPokemons = response.data.results.filter((poke) =>
-          poke.name.toLowerCase().includes(searchText.toLowerCase())
-        );
-        if (filteredPokemons.length === 0) {
-          setNoResults(true);
-          setTotalPages(1);
-          setLoading(false);
+        if (searchText) {
+          setLoading(true);
+          const response = await apiClient.get<FetchPokemonsResponse>(
+            `/pokemon?limit=1302`
+          );
+          const totalPokemonsCount = response.data.count;
+          const filteredPokemons = response.data.results.filter((poke) =>
+            poke.name.toLowerCase().includes(searchText.toLowerCase())
+          );
+          if (filteredPokemons.length === 0) {
+            setNoResults(true);
+            setTotalPages(1);
+            setLoading(false);
+          } else {
+            const totalPagesCount = Math.ceil(
+              totalPokemonsCount / itemsPerPage
+            );
+            setTotalPages(totalPagesCount);
+            setPokemonsList(filteredPokemons);
+            setNoResults(false);
+            setLoading(false);
+          }
         } else {
-          const totalPagesCount = Math.ceil(totalPokemonsCount / itemsPerPage);
-          setTotalPages(totalPagesCount);
-          setPokemonsList(filteredPokemons);
-          setNoResults(false);
-          setLoading(false);
+          setLoading(true);
+          const response = await apiClient.get<FetchPokemonsResponse>(
+            `/pokemon?limit=${itemsPerPage}&offset=${
+              (currentPage - 1) * itemsPerPage
+            }`
+          );
+          const totalPokemonsCount = response.data.count;
+          const filteredPokemons = response.data.results;
+          if (filteredPokemons.length === 0) {
+            setNoResults(true);
+            setTotalPages(1);
+            setLoading(false);
+          } else {
+            const totalPagesCount = Math.ceil(
+              totalPokemonsCount / itemsPerPage
+            );
+            setTotalPages(totalPagesCount);
+            setPokemonsList(filteredPokemons);
+            setNoResults(false);
+            setLoading(false);
+          }
         }
       } catch (err: any) {
         setError(err.message);
@@ -53,7 +77,7 @@ const useFetchPokemons = (itemsPerPage: number) => {
       }
     };
     fetchPokemons();
-  }, [searchText, currentPage]);
+  }, [searchText, currentPage, itemsPerPage]);
 
   return {
     pokemonsList,

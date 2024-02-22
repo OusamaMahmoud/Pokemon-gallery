@@ -17,6 +17,7 @@ import { ReactNode, useState } from "react";
 import PokemonStats from "../components/PokemonStats";
 import PokemonMoves from "../components/PokemonMoves";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import SpinnerWithCounter from "../Spinner";
 
 interface ComponentsMapper {
   [key: string]: ReactNode;
@@ -25,11 +26,13 @@ interface ComponentsMapper {
 const PokemonDetailsPage = () => {
   const navigate = useNavigate();
   const classes = useStyles().classes;
-  const { slug } = useParams();
+  const { slug: pokemonName } = useParams();
   const [activeComponent, setActiveComponent] = useState("STATS");
   const [activeButton, setActiveButton] = useState("STATS");
 
-  const { pokemonDetails, loading, pokemonError } = usePokemonDetails(slug!);
+  const { pokemonDetails, loading, pokemonError } = usePokemonDetails(
+    pokemonName!
+  );
 
   const components: ComponentsMapper = {
     STATS: <PokemonStats qualities={pokemonDetails} />,
@@ -41,7 +44,8 @@ const PokemonDetailsPage = () => {
     setActiveButton(componentName);
   };
 
-  const { pokemonSpecies } = usePokemonSpecies(slug!);
+  const { pokemonSpecies } = usePokemonSpecies(pokemonName!);
+
   return (
     <>
       {pokemonError && (
@@ -56,13 +60,10 @@ const PokemonDetailsPage = () => {
       >
         <NavigateBeforeIcon style={{ marginRight: "3px" }} /> BACK
       </Button>
+
       {loading ? (
-        <Box boxShadow={4} p={2} borderRadius={2} maxWidth={1000} m="0 auto">
-          <CircularProgress
-            variant="indeterminate"
-            size={200}
-            style={{ marginLeft: "200px" }}
-          />
+        <Box p={2} borderRadius={2} maxWidth={100} m="auto" height={700}>
+          <SpinnerWithCounter loading={loading} />
         </Box>
       ) : (
         <Box
@@ -91,7 +92,7 @@ const PokemonDetailsPage = () => {
                   gutterBottom
                   style={{ textTransform: "capitalize" }}
                 >
-                  {slug}
+                  {pokemonName}
                 </Typography>
                 <Container maxWidth={"sm"}>
                   {pokemonDetails.types && (

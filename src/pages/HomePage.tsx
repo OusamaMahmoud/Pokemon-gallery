@@ -10,7 +10,7 @@ const Home = () => {
       <CssBaseline />
       <main style={{ padding: "80px 0px" }}>
         <Container maxWidth="md" className={classes.cardGrid}>
-          <PokemonGrid  />
+          <PokemonGrid />
         </Container>
       </main>
     </>

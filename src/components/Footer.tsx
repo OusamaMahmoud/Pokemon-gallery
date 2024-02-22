@@ -10,7 +10,7 @@ interface Props {
 
 const Footer = ({ currentPage, totalPages, onPrevious, onNext }: Props) => {
   const classes = useStyles().classes;
-  
+
   const handlePreviousButton = () => {
     if (currentPage > 1) {
       onPrevious(currentPage - 1);
@@ -23,7 +23,6 @@ const Footer = ({ currentPage, totalPages, onPrevious, onNext }: Props) => {
   };
   return (
     <Container maxWidth="sm" style={{ padding: "80px 0px" }}>
-      <div>
         <Grid container spacing={2} justifyContent={"space-around"}>
           <Grid item>
             <Button
@@ -48,7 +47,6 @@ const Footer = ({ currentPage, totalPages, onPrevious, onNext }: Props) => {
             </Button>
           </Grid>
         </Grid>
-      </div>
     </Container>
   );
 };

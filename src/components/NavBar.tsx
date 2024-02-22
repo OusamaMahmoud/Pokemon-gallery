@@ -13,6 +13,7 @@ import useStyles from "../styles";
 import { useRef, useState } from "react";
 import { useSearchText } from "../contexts/SearchTextContext";
 import pokeAPILogo from "../assets/pokeAPI_logo.png";
+import { Link } from "react-router-dom";
 const NavBar = () => {
   const classes = useStyles().classes;
   const [error, setError] = useState("");
@@ -40,12 +41,14 @@ const NavBar = () => {
     <AppBar position="relative" className={classes.navBar}>
       <Toolbar>
         <Grid container justifyContent={"space-between"} alignItems={"center"}>
-          <Grid item className={classes.flex} >
-            <img src={pokeAPILogo} width={100} />
-            <Typography variant="h5" style={{ color: "white" }}>
-              Pokemon Gallary
-            </Typography>
-          </Grid>
+          <Link to={"/"} style={{ textDecoration: "none" }}>
+            <Grid item className={classes.flex}>
+              <img src={pokeAPILogo} width={100} />
+              <Typography variant="h5" style={{ color: "white" }}>
+                Pokemon Gallary
+              </Typography>
+            </Grid>
+          </Link>
           <Grid item>
             <form onSubmit={handleSubmit}>
               <TextField
