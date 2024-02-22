@@ -12,15 +12,32 @@ import { useParams } from "react-router-dom";
 import usePokemonDetails from "../hooks/usePokemonDetails";
 import usePokemonSpecies from "../hooks/usePokemonSpecies";
 import useStyles from "../styles";
-import PokemonMovies from "../components/PokemonMoves";
 import PokemonAbilities from "../components/PokemonAbilities";
+import { ReactNode, useState } from "react";
+import PokemonStats from "../components/PokemonStats";
+import PokemonMoves from "../components/PokemonMoves";
+
+interface ComponentsMapper {
+  [key: string]: ReactNode;
+}
 
 const PokemonDetailsPage = () => {
   const classes = useStyles().classes;
-
   const { slug } = useParams();
+  const [activeComponent, setActiveComponent] = useState("STATS");
+  const [activeButton, setActiveButton] = useState("STATS");
 
   const { pokemonDetails, loading, pokemonError } = usePokemonDetails(slug!);
+
+  const components: ComponentsMapper = {
+    STATS: <PokemonStats qualities={pokemonDetails} />,
+    ABILITIES: <PokemonAbilities qualities={pokemonDetails} />,
+    MOVES: <PokemonMoves qualities={pokemonDetails} />,
+  };
+  const handleButtonClick = (componentName: string) => {
+    setActiveComponent(componentName);
+    setActiveButton(componentName);
+  };
   const { pokemonSpecies } = usePokemonSpecies(slug!);
   return (
     <>
@@ -44,6 +61,7 @@ const PokemonDetailsPage = () => {
           p={2}
           borderRadius={2}
           maxWidth={1400}
+          minHeight={"700px"}
           m="130px auto"
         >
           {pokemonDetails && (
@@ -105,9 +123,42 @@ const PokemonDetailsPage = () => {
             </Grid>
           )}
           <Container maxWidth="xs" style={{ margin: "0px" }}>
-            <Button className={classes.detailsPageButton}>Stats</Button>
-            <Button className={classes.detailsPageButton}>Moves</Button>
-            <Button className={classes.detailsPageButton}>Abilities</Button>
+            <Button
+              style={{
+                color: `${activeButton === "STATS" ? "#353be2" : ""}`,
+                borderBottom: `${
+                  activeButton === "STATS" ? "2px solid #0023c9" : ""
+                }`,
+              }}
+              onClick={() => handleButtonClick("STATS")}
+              className={classes.detailsPageButton}
+            >
+              Stats
+            </Button>
+            <Button
+              style={{
+                color: `${activeButton === "MOVES" ? "#353be2" : ""}`,
+                borderBottom: `${
+                  activeButton === "MOVES" ? "2px solid #0023c9" : ""
+                }`,
+              }}
+              onClick={() => handleButtonClick("MOVES")}
+              className={classes.detailsPageButton}
+            >
+              Moves
+            </Button>
+            <Button
+              style={{
+                color: `${activeButton === "ABILITIES" ? "#353be2" : ""}`,
+                borderBottom: `${
+                  activeButton === "ABILITIES" ? "2px solid #0023c9" : ""
+                }`,
+              }}
+              onClick={() => handleButtonClick("ABILITIES")}
+              className={classes.detailsPageButton}
+            >
+              Abilities
+            </Button>
           </Container>
 
           <Container
@@ -117,9 +168,7 @@ const PokemonDetailsPage = () => {
               marginTop: "60px",
             }}
           >
-            {pokemonDetails.stats && !loading && (
-              <PokemonAbilities qualities={pokemonDetails} />
-            )}
+            {pokemonDetails.stats && !loading && components[activeComponent]}
           </Container>
         </Box>
       )}

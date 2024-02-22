@@ -18,9 +18,9 @@ const PokemonMoves = ({ qualities }: Props) => {
            }}
            className={classes.scrollableContainer}
            >
-        {qualities &&
+        {qualities.moves.length != 0 &&
           qualities.moves.map(({ move }, index) => (
-            <Grid container justifyContent={"space-between"}>
+            <Grid key={move.name} container justifyContent={"space-between"}>
               <Grid
                 item
                 style={{

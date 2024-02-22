@@ -8,9 +8,9 @@ interface Props {
 const PokemonStats = ({ qualities }: Props) => {
   return (
     <>
-      {qualities &&
+      {qualities.stats.length != 0 &&
         qualities.stats.map(({ stat, base_stat }) => (
-          <Grid container justifyContent={"space-between"}>
+          <Grid key={stat.name} container justifyContent={"space-between"}>
             <Grid
               item
               style={{

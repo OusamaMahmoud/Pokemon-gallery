@@ -46,7 +46,7 @@ const useStyles = makeStyles()((theme) => {
       marginRight: "20px",
     },
     scrollableContainer: {
-      maxHeight: "400px",
+      maxHeight: "250px",
       overflowY: "auto",
       "&::-webkit-scrollbar": {
         width: "12px",

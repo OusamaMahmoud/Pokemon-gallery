@@ -15,9 +15,9 @@ const PokemonAbilities = ({ qualities }: Props) => {
       }}
       className={classes.scrollableContainer}
     >
-      {qualities &&
+      {qualities.abilities.length != 0 &&
         qualities.abilities.map(({ ability }, index) => (
-          <Grid container justifyContent={"space-between"}>
+          <Grid key={ability.name} container justifyContent={"space-between"}>
             <Grid
               item
               style={{
