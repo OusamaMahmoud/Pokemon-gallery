@@ -5,6 +5,7 @@ import { useSearchText } from "../contexts/SearchTextContext";
 export interface Pokemon {
   name: string;
   url: string;
+  id: string;
 }
 
 interface FetchPokemonsResponse {
@@ -29,33 +30,16 @@ const useFetchPokemons = (itemsPerPage: number) => {
         if (searchText) {
           setLoading(true);
           const response = await apiClient.get<FetchPokemonsResponse>(
-            `/pokemon?limit=500`
+            `/pokemon?limit=1025`
           );
           const totalPokemonsCount = response.data.count;
           const filteredPokemons = response.data.results.filter((poke) =>
             poke.name.toLowerCase().includes(searchText.toLowerCase())
           );
           if (filteredPokemons.length === 0) {
-            const restResponse = await apiClient.get<FetchPokemonsResponse>(
-              `/pokemon?limit=500&offset=500`
-            );
-            const restFilteredPokemons = restResponse.data.results.filter(
-              (poke) =>
-                poke.name.toLowerCase().includes(searchText.toLowerCase())
-            );
-            if (restFilteredPokemons.length === 0) {
-              setNoResults(true);
-              setTotalPages(1);
-              setLoading(false);
-            } else {
-              const totalPagesCount = Math.ceil(
-                totalPokemonsCount / itemsPerPage
-              );
-              setTotalPages(totalPagesCount);
-              setPokemonsList(restFilteredPokemons);
-              setNoResults(false);
-              setLoading(false);
-            }
+            setNoResults(true);
+            setTotalPages(1);
+            setLoading(false);
           } else {
             const totalPagesCount = Math.ceil(
               totalPokemonsCount / itemsPerPage

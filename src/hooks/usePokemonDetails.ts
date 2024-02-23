@@ -26,7 +26,7 @@ interface PokemonType {
   slot: number;
   type: { name: string };
 }
-const usePokemonDetails = (pokemonId: string) => {
+const usePokemonDetails = (pokemonName: string) => {
   const [loading, setLoading] = useState(false);
   const [pokemonError, setPokemonError] = useState("");
 
@@ -36,7 +36,7 @@ const usePokemonDetails = (pokemonId: string) => {
   useEffect(() => {
     setLoading(true);
     apiClient
-      .get(`/pokemon/${pokemonId}`)
+      .get(`/pokemon/${pokemonName}`)
       .then((res) => {
         setPokemonDetails(res.data);
         setLoading(false);

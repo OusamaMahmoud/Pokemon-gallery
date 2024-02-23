@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import usePokemonDetails, { PokemonDetails } from "../hooks/usePokemonDetails";
+import usePokemonDetails from "../hooks/usePokemonDetails";
 import usePokemonSpecies from "../hooks/usePokemonSpecies";
 import { Pokemon } from "../hooks/useFetchPokemons";
 
@@ -19,9 +19,7 @@ interface Props {
 
 const PokemonCard = ({ pokemon }: Props) => {
   const classes = useStyles().classes;
-
   const { pokemonDetails, pokemonError } = usePokemonDetails(pokemon.name);
-
   const { pokemonSpecies, loading, speciesError } = usePokemonSpecies(
     pokemon.name
   );
@@ -40,7 +38,22 @@ const PokemonCard = ({ pokemon }: Props) => {
       )}
 
       <Card className={classes.card}>
-        {renderPokemonMedia(pokemonDetails, loading)}
+        {loading ? (
+          <Skeleton
+            style={{
+              paddingTop: "56.25%",
+              backgroundColor: "#efe9e9",
+              height: "470px",
+            }}
+          />
+        ) : (
+          pokemonDetails.sprites && (
+            <CardMedia
+              className={classes.cardMedia}
+              image={pokemonDetails.sprites.front_default}
+            />
+          )
+        )}
         <CardContent className={classes.cardContent}>
           <Typography
             variant="h5"
@@ -48,68 +61,54 @@ const PokemonCard = ({ pokemon }: Props) => {
             style={{ fontWeight: "500", textTransform: "capitalize" }}
           >
             <Link
-              to={`/pokemonDetailsPage/${pokemonDetails.id}`}
+              to={`/pokemonDetailsPage/${pokemon.name}`}
               style={{ textDecoration: "none", color: "black" }}
             >
               {pokemon.name}
             </Link>
           </Typography>
-          {pokemonSpecies.flavor_text_entries && (
+          {pokemonSpecies?.flavor_text_entries && (
             <Typography paragraph color={"textSecondary"}>
-              {getFormattedFlavorText(pokemonSpecies)}
+              {pokemonSpecies.flavor_text_entries[3]?.flavor_text.replace(
+                /\/g,
+                ""
+              ) ||
+                "Once it slams its shell shut, it is impossible toopen, even by those with superor strength."}
             </Typography>
           )}
         </CardContent>
-        {renderPokemonTypes(pokemonDetails, pokemonSpecies)}
+        {pokemonDetails.types && (
+          <CardActions style={{ padding: "0px 0px 20px 25px" }}>
+            <Typography
+              variant="caption"
+              className={classes.pokeType}
+              style={{
+                backgroundColor: `${
+                  pokemonSpecies.color ? pokemonSpecies.color.name : "black"
+                }`,
+              }}
+            >
+              {pokemonDetails.types[0]?.type.name}
+            </Typography>
+
+            {pokemonDetails.types[1] && (
+              <Typography
+                variant="caption"
+                className={classes.pokeType}
+                style={{
+                  backgroundColor: `${
+                    pokemonSpecies.color ? pokemonSpecies.color.name : "black"
+                  }`,
+                }}
+              >
+                {pokemonDetails.types[1]?.type.name || ""}
+              </Typography>
+            )}
+          </CardActions>
+        )}
       </Card>
     </>
   );
-};
-
-const renderPokemonMedia = (
-  pokemonDetails: PokemonDetails,
-  loading: boolean
-) => {
-  const classes = useStyles().classes;
-
-  if (loading) {
-    return <Skeleton variant="rectangular" height={470} />;
-  }
-  return (
-    pokemonDetails.sprites && (
-      <CardMedia
-        className={classes.cardMedia}
-        image={pokemonDetails.sprites.front_default}
-      />
-    )
-  );
-};
-const renderPokemonTypes = (
-  pokemonDetails: PokemonDetails,
-  pokemonSpecies: any
-) => {
-  const classes = useStyles().classes;
-
-  if (!pokemonDetails.types) return null;
-  const { color } = pokemonSpecies;
-  return (
-    <CardActions style={{ padding: "0px 0px 20px 25px" }}>
-      {pokemonDetails.types.map((type: any, index: number) => (
-        <Typography
-          key={index}
-          variant="caption"
-          className={classes.pokeType}
-          style={{ backgroundColor: color ? color.name : "black" }}
-        >
-          {type.type.name}
-        </Typography>
-      ))}
-    </CardActions>
-  );
-};
-
-const getFormattedFlavorText = (pokemonSpecies: any) => {
-  return pokemonSpecies.flavor_text_entries[3].flavor_text.replace(/\/g, "");
 };
 
 export default PokemonCard;
