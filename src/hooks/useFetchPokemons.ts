@@ -21,6 +21,7 @@ const useFetchPokemons = (itemsPerPage: number) => {
   const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [backButton, setBackButton] = useState(false);
 
   const { searchText } = useSearchText();
 
@@ -40,6 +41,7 @@ const useFetchPokemons = (itemsPerPage: number) => {
             setNoResults(true);
             setTotalPages(1);
             setLoading(false);
+            setBackButton(false);
           } else {
             const totalPagesCount = Math.ceil(
               totalPokemonsCount / itemsPerPage
@@ -48,6 +50,7 @@ const useFetchPokemons = (itemsPerPage: number) => {
             setPokemonsList(filteredPokemons);
             setNoResults(false);
             setLoading(false);
+            setBackButton(true);
           }
         } else {
           setLoading(true);
@@ -62,6 +65,7 @@ const useFetchPokemons = (itemsPerPage: number) => {
             setNoResults(true);
             setTotalPages(1);
             setLoading(false);
+            setBackButton(false);
           } else {
             const totalPagesCount = Math.ceil(
               totalPokemonsCount / itemsPerPage
@@ -70,6 +74,7 @@ const useFetchPokemons = (itemsPerPage: number) => {
             setPokemonsList(filteredPokemons);
             setNoResults(false);
             setLoading(false);
+            setBackButton(false);
           }
         }
       } catch (err: any) {
@@ -78,7 +83,7 @@ const useFetchPokemons = (itemsPerPage: number) => {
       }
     };
     fetchPokemons();
-  }, [searchText, currentPage, itemsPerPage]);
+  }, [searchText ,currentPage, itemsPerPage]);
 
   return {
     pokemonsList,
@@ -93,6 +98,7 @@ const useFetchPokemons = (itemsPerPage: number) => {
     setLoading,
     setTotalPages,
     setCurrentPage,
+    backButton,
   };
 };
 

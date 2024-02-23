@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 const NavBar = () => {
   const classes = useStyles().classes;
   const [error, setError] = useState("");
-
   const { setSearchText } = useSearchText();
 
   const ref = useRef<HTMLInputElement>(null);

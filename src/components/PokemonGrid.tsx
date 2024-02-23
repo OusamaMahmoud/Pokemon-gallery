@@ -1,12 +1,13 @@
-import { Alert, Grid, Typography, Skeleton } from "@mui/material";
+import { Alert, Grid, Typography, Skeleton, Button } from "@mui/material";
 import PokemonCard from "./PokemonCard";
 import Footer from "./Footer";
 import useFetchPokemons from "../hooks/useFetchPokemons";
 import { useEffect } from "react";
 import { useSearchText } from "../contexts/SearchTextContext";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 
 const PokemonGrid = () => {
-  const { searchText } = useSearchText();
+  const { searchText, setSearchText } = useSearchText();
 
   const {
     currentPage,
@@ -16,6 +17,7 @@ const PokemonGrid = () => {
     pokemonsList,
     setCurrentPage,
     totalPages,
+    backButton,
   } = useFetchPokemons(6);
 
   useEffect(() => {
@@ -33,6 +35,20 @@ const PokemonGrid = () => {
   };
   return (
     <>
+      {backButton && (
+        <Button
+          onClick={() => {
+            setSearchText("");
+          }}
+          variant="contained"
+          style={{
+            backgroundColor: "#bb3014",
+            marginBottom: "20px",
+          }}
+        >
+          <NavigateBeforeIcon style={{ marginRight: "3px" }} /> Back
+        </Button>
+      )}
       {error && (
         <Alert style={{ margin: "30px 0px" }} severity="error">
           {error}
@@ -53,6 +69,7 @@ const PokemonGrid = () => {
           No Pokémon found matching "{searchText}".
         </Typography>
       )}
+
       {!error && !noResults && (
         <>
           {loading ? (
@@ -70,15 +87,19 @@ const PokemonGrid = () => {
                   <PokemonCard pokemon={pokemon} />
                 </Grid>
               ))}
-              <Footer
-                onPrevious={(page) => handlePageChangeButtons(page)}
-                onNext={(page) => handlePageChangeButtons(page)}
-                currentPage={currentPage}
-                totalPages={totalPages}
-              />
-              <Typography variant="body2" style={{ marginTop: "10px" }}>
-                Page {currentPage} of {totalPages}
-              </Typography>
+              {!backButton && (
+                <>
+                  <Footer
+                    onPrevious={(page) => handlePageChangeButtons(page)}
+                    onNext={(page) => handlePageChangeButtons(page)}
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                  />
+                  <Typography variant="body2" style={{ marginTop: "10px" }}>
+                    Page {currentPage} of {totalPages}
+                  </Typography>
+                </>
+              )}
             </Grid>
           )}
         </>
