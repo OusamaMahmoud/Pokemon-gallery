@@ -8,6 +8,8 @@ The application provides a user-friendly interface for exploring the vast world 
 ## Demo
 You can access the deployed application [here](https://pokemon-gallery-cu8a.vercel.app/).
 
+## Application Images:
+
 [PokemonList](https://github.com/OusamaMahmoud/Pokemon-gallery/blob/main/public/PokemonImages/pokemonsList.png)
 
 [PokemonDetailsPage](https://github.com/OusamaMahmoud/Pokemon-gallery/blob/main/public/PokemonImages/pokemonDetailsPage.png)
