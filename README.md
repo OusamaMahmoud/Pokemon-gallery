@@ -12,7 +12,7 @@ You can access the deployed application [here](https://pokemon-gallery-cu8a.verc
 
 [PokemonDetailsPage](https://github.com/OusamaMahmoud/Pokemon-gallery/blob/main/public/PokemonImages/pokemonDetailsPage.png)
 
-[PokemonList](https://github.com/OusamaMahmoud/Pokemon-gallery/blob/main/public/PokemonImages/pokemonsList.png)
+[PokemonSearchPage](https://github.com/OusamaMahmoud/Pokemon-gallery/blob/main/public/PokemonImages/PokemonSearchPage.png)
 
 
 ## Installation
